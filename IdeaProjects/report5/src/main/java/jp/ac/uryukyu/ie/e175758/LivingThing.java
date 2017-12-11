@@ -48,11 +48,19 @@ public class LivingThing {
 
     public void attack(LivingThing opponent) {
         int damage = (int) (Math.random() * attack);
-        if (dead == true) {
+        int Critical = (int) (Math.random() * 10);
+
+        if (dead) {
             damage = 0;
+            System.out.printf("%sの攻撃！%sに%dのダメージを与えた！！\n", name, opponent.getName(), damage);
+        }else if(Critical <= 3) {
+            damage = damage * 2;
+            System.out.printf("%sの攻撃！会心の一撃！！%sに%dのダメージを与えた！！\n", name, opponent.getName(), damage);
+        }else {
+            System.out.printf("%sの攻撃！%sに%dのダメージを与えた！！\n", name, opponent.getName(), damage);
         }
-        System.out.printf("%sの攻撃！%sに%dのダメージを与えた！！\n", name, opponent.getName(), damage);
-        opponent.wounded(damage);
+            opponent.wounded(damage);
+
     }
 
     public void wounded(int damage) {
