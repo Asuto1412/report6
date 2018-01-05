@@ -11,49 +11,62 @@ public class Card {
 
     public static void deal_first() {
         int num = random.nextInt(52);
-        String[] a = new String[30];
-        int[] c = new int[30];
-        int p = 0;
-        int sum = 0;
-        for (int i = 0; i < 2; i++) {
+        /**
+         *トランプは各数字4まいずつしか存在しないが、ここでは4枚以上存在するとする。
+         * @param c 引いたカードを収納場所
+         * @param p トランプの数字
+         * @param sum 引いたカードの合計
+         */
+        String a,c = null;
+        String b = null;
+        String d = null;
+        int i,p,sum = 0;
+        for (i = 0; i < 2; i++) {
             p = random.nextInt(13) + 1;
-            c[i] = p;
-            if (c[i] == 11) {
-                a[i] = "J";
+            //アルファベット表記に変更
+            if (p == 11) {
+                a = "J";
             } else {
-                if (c[i] == 12) {
-                    a[i] = "Q";
+                if (p == 12) {
+                    a = "Q";
                 } else {
-                    if (c[i] == 13) {
-                        a[i] = "K";
+                    if (p == 13) {
+                        a = "K";
                     } else {
-                        if (c[i] == 1) {
-                            a[i] = "A";
+                        if (p == 1) {
+                            a = "A";
                         }
+                        d = String.valueOf(p);
+                        a = d;
                     }
                 }
             }
-            String d = String.valueOf(p);
-            a[i] = d;
-
-            if (c[i] >= 10) {
-                c[i] = 10;
+            if (i == 0) {
+                b = a;
+            } else {
+                c = a;
             }
-            if (c[i] >= 1) {
-                c[i] = 11;
+            //ブラックジャックでは10以上のカードを10と見るため値の変更
+            if (p >= 10) {
+                p = 10;
             }
-            sum += c[i];
+            //ブラックジャックではAは1と11の役割を担うがここでは11としておく
+            if (p == 1) {
+                p = 11;
+            }
+            sum += p;
+            //Aが手札にあり、合計が22を超えている場合、Aの値を1に変更
             if (sum >= 22) {
                 for (int k = 0; k <= sum; k++) {
-                    if (c[k] == 11) {
-                        c[k] = 1;
+                    if (p == 11) {
+                        p = 1;
                         sum -= 10;
                     }
                 }
             }
         }
-        for (int i = 2; sum < 22; i++) {
-            System.out.println("現在の点数は" + a[1] + "と" + a[2] + "の合計" + sum + "です。");
+        for (i = 2; i < 3; i++) {
+            System.out.println("現在の点数は" + b + "と" + c + "の合計" + sum + "です。");
         }
     }
 }
