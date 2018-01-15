@@ -1,29 +1,27 @@
 package jp.ac.uryukyu.ie.e175758;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
 public class Player extends Card {
-    static int sum = 0;
     static int i = 2;
     static int pa,pb,pc,pd,pe,pf,pg,ph,pi = 0;
-    static String qa,qb,qc,qd,qe,qf,qg,qh,qi = null;
-    static List<Integer> num = new ArrayList<Integer>();
-    static List<String> list = new ArrayList<String>();
+    static String qa,qb,qc,qd,qe,qf,qg,qh,qi,qq = null;
+    static int p_sum = sum;
 
     public static void F_Deal() {
+        //Deal()を2回繰り返すことで2枚のカードを配る
         Deal();
         pa = getP();
         qa = getA();
         Deal();
         pb = getP();
         qb = getA();
-        sum = pa + pb;
+        p_sum = pa + pb;
 
-        System.out.println("プレイヤーのカードは" + qa + "," + qb + "の合計" + sum + "です。");
+        System.out.println("プレイヤーのカードは" + qa + "," + qb + "の合計" + p_sum + "です。");
     }
 
     public static void S_Deal() {
-        System.out.println("この後の行動を選択してください。\n[]:Hit,[h以外]:Stay");
+        //プレイヤーにHITするかSTAYするかを選択してもらう
+        System.out.println("この後の行動を選択してください。\n[h]:Hit,[h以外]:Stay");
         String input;
         try (Scanner in = new Scanner(System.in)) {
             input = in.nextLine();
@@ -53,14 +51,18 @@ public class Player extends Card {
                     pi = getP();
                     qi = getA();
                 }
-                sum += pc + pd + pe + pf + pg + ph + pi;
-                System.out.println("プレイヤーの引いたカードは" + getA() + ",\n合計は" + sum + " です。");
+                p_sum += pc + pd + pe + pf + pg + ph + pi;
+                System.out.println("プレイヤーの引いたカードは" + getA() + ",\n合計は" + p_sum + "です。");
+                if (p_sum > 21) {
+                    //Bustしたかどうかを判定する
+                    System.out.println("プレイヤーはBustしました");
+                    break;
+                } else {
+                    System.out.println("この後の行動を選択してください。\n[h]:Hit,[h以外]:Stay");
+                    input = in.nextLine();
+                }
             }
-            if (sum > 21) {
-                System.out.println("合計が" + sum + "でプレーヤーはBustしました");
-            } else {
-                System.out.println("プレイヤーのカードの合計は" + sum + "で確定しました。");
-            }
+            System.out.println("プレイヤーのターンは終了しました。");
         }
     }
 }

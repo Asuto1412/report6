@@ -1,35 +1,33 @@
 package jp.ac.uryukyu.ie.e175758;
-import java.util.List;
-import java.util.ArrayList;
 
 public class Dealer extends Card {
-    static int sum = 0;
     static int i = 2;
     static int pa,pb,pc,pd,pe,pf,pg,ph,pi = 0;
     static String qa,qb,qc,qd,qe,qf,qg,qh,qi,qq = null;
-    static List<Integer> num = new ArrayList<Integer>();
-    static List<String> list = new ArrayList<String>();
-
+    static int d_sum = sum;
     public static void F_Deal() {
-            Deal();
-            qq = getA();
-            visible = false;
-            pa = getP();
-            qa = getA();
-            Deal();
-            visible = true;
-            pb = getP();
-            qb = getA();
-            sum = pb;
-        System.out.println("ディーラーのカードは" + qa + "," + qb + "の合計" + sum + "です。");
+        //Deal()を2回繰り返すことで2枚のカードを配る
+        Deal();
+        qq = getA();
+        //ディーラーに配られるカードの１枚目は裏返した状態で配る
+        visible = false;
+        pa = getP();
+        qa = getA();
+        Deal();
+        visible = true;
+        pb = getP();
+        qb = getA();
+        d_sum = pb;
+        System.out.println("ディーラーのカードは" + qa + "," + qb + "の合計" + d_sum + "です。");
     }
 
     public static void S_Deal() {
-        visible = true;
-        sum = pa + pb;
+        d_sum = pa + pb;
         System.out.println("ディーラーのカードをオープン！");
-        System.out.println("ディーラーのカードは" + qq + "," + qb + "の合計" + sum + "です。");
-        while ( sum <= 16 ) {
+        //ここでディーラーの最初に配られたカードを2枚とも表にする。
+        System.out.println("ディーラーのカードは" + qq + "," + qb + "の合計" + d_sum + "です。");
+        //ディーラーはカード合計が16以下の時は必ずHITしなければいけない
+        while ( d_sum <= 16 ) {
             Deal();
             i++;
             if (i == 2) {
@@ -54,13 +52,14 @@ public class Dealer extends Card {
                 pi = getP();
                 qi = getA();
             }
-            sum += pc + pd + pe + pf + pg + ph + pi;
-            System.out.println("ディーラーの引いたカードは" + getA() +",\n合計は" + sum + " です。");
+            d_sum += pc + pd + pe + pf + pg + ph + pi;
+            System.out.println("ディーラーの引いたカードは" + getA() +",\n合計は" + d_sum + " です。");
         }
-        if (sum > 21) {
-            System.out.println("合計が" + sum + "でディーラーはBustしました");
+        if (d_sum > 21) {
+            //Bustしたかどうかを判定する
+            System.out.println("合計が" + d_sum + "でディーラーはBustしました");
         } else {
-            System.out.println("ディーラーのカードの合計" + sum + "で確定しました。");
+            System.out.println("ディーラーのカードの合計" + d_sum + "で確定しました。");
         }
     }
 }

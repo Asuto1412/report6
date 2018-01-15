@@ -1,6 +1,7 @@
 package jp.ac.uryukyu.ie.e175758;
 import java.util.*;
 public class Card {
+    //カードの表裏としてvisibleを用意する。
     public static boolean visible = true;
     public static Random random = new Random();
     public static int p,sum = 0;
@@ -10,7 +11,8 @@ public class Card {
     }
     public static String getA(){
         if (visible == false) {
-            return "?";
+            //カードが裏向きになっているときは"？"と表示する。
+            return "？";
         } else {
             return a;
         }
@@ -54,8 +56,8 @@ public class Card {
             p = 11;
         }
         sum += p;
-        //Aが手札にあり、合計が22を超えている場合、Aの値を1に変更
-        if (sum < 22) {
+        //Aが手札にあり、合計が21を超えている場合、Aの値を1に変更
+        if (sum > 21) {
             for (int k = 0; k <= sum; k++) {
                 if (p == 11) {
                     p = 1;
